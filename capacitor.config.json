@@ -1,0 +1,6 @@
+{
+	"appId": "io.ionic.starter",
+	"appName": "emp-mgmt-ionic",
+	"webDir": "www",
+	"bundledWebRuntime": false
+}
