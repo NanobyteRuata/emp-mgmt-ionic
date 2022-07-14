@@ -1,0 +1,148 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{title}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form *ngIf="employeeForm" [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
+    <ion-item lines="full">
+      <ion-label position="stacked">Name</ion-label>
+      <ion-input
+        formControlName="name"
+        type="text"
+        required
+        placeholder="John Doe"
+      ></ion-input>
+      <ion-note
+        *ngIf="employeeForm.controls.name.invalid && (employeeForm.controls.name.dirty || employeeForm.controls.name.touched)"
+        slot="error"
+        >{{nameErrorMessage}}</ion-note
+      >
+    </ion-item>
+
+    <ion-item lines="full">
+      <ion-label position="stacked">DOB</ion-label>
+      <ion-input
+        id="dob"
+        formControlName="dob"
+        type="text"
+        placeholder="YYYY-MM-DD"
+        required
+      ></ion-input>
+      <ion-popover #dobPopover trigger="dob" size="cover">
+        <ng-template>
+          <ion-datetime
+            presentation="date"
+            [value]="formControlDobValue"
+            (ionChange)="setDobFromDatePicker($event, dobPopover)"
+          ></ion-datetime>
+        </ng-template>
+      </ion-popover>
+      <ion-note
+        *ngIf="employeeForm.controls.dob.invalid && (employeeForm.controls.dob.dirty || employeeForm.controls.dob.touched)"
+        slot="error"
+        >{{dobErrorMessage}}</ion-note
+      >
+    </ion-item>
+
+    <ion-item lines="full">
+      <ion-label position="stacked">Department</ion-label>
+      <input
+        class="autocomplete-input"
+        list="departments"
+        formControlName="department"
+        type="text"
+        placeholder="HR Department"
+        required
+      />
+      <datalist id="departments">
+        <option
+          *ngFor="let department of departments"
+          [value]="department"
+        ></option>
+      </datalist>
+      <ion-note
+        *ngIf="employeeForm.controls.department.invalid && (employeeForm.controls.department.dirty || employeeForm.controls.department.touched)"
+        slot="error"
+        >{{departmentErrorMessage}}</ion-note
+      >
+    </ion-item>
+
+    <ion-item lines="full">
+      <ion-label position="stacked">Position</ion-label>
+      <input
+        class="autocomplete-input"
+        list="positions"
+        formControlName="position"
+        placeholder="HR Officer"
+        type="text"
+        required
+      />
+      <datalist id="positions">
+        <option *ngFor="let position of positions" [value]="position"></option>
+      </datalist>
+      <ion-note
+        *ngIf="employeeForm.controls.position.invalid && (employeeForm.controls.position.dirty || employeeForm.controls.position.touched)"
+        slot="error"
+        >{{positionErrorMessage}}</ion-note
+      >
+    </ion-item>
+
+    <ion-item lines="full">
+      <ion-label position="stacked">Mobile</ion-label>
+      <ion-intl-tel-input formControlName="mobile" [defaultCountryiso]="'mm'">
+      </ion-intl-tel-input>
+      <ion-note
+        *ngIf="employeeForm.controls.mobile.invalid && employeeForm.controls.mobile.touched"
+        slot="error"
+        >{{mobileErrorMessage}}</ion-note
+      >
+    </ion-item>
+
+    <ion-item lines="full">
+      <ion-label position="stacked">NRC</ion-label>
+      <ion-input
+        formControlName="nrc"
+        type="text"
+        placeholder="12/KATATA(N)012349"
+        required
+      ></ion-input>
+      <ion-note
+        *ngIf="employeeForm.controls.nrc.invalid && (employeeForm.controls.nrc.dirty || employeeForm.controls.nrc.touched)"
+        slot="error"
+        >{{nrcErrorMessage}}</ion-note
+      >
+    </ion-item>
+
+    <ion-item lines="full">
+      <ion-label position="stacked">Salary</ion-label>
+      <ion-input
+        formControlName="salary"
+        pattern="^[$\-\s]*[\d\,]*?([\.]\d{0,10})?\s*$"
+        (ionChange)="setSalaryValue()"
+        inputmode="numeric"
+        placeholder="300,000"
+        required
+      >
+        <span class="suffix-icon">MMK</span>
+      </ion-input>
+      <ion-note
+        *ngIf="employeeForm.controls.salary.invalid && (employeeForm.controls.salary.dirty || employeeForm.controls.salary.touched)"
+        slot="error"
+        >{{salaryErrorMessage}}</ion-note
+      >
+    </ion-item>
+
+    <ion-row>
+      <ion-col>
+        <ion-button type="submit" color="primary" expand="block"
+          >Submit</ion-button
+        >
+      </ion-col>
+    </ion-row>
+  </form>
+</ion-content>

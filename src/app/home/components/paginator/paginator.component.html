@@ -1,0 +1,51 @@
+<ion-toolbar>
+  <div class="flex-row">
+    Page Size:
+    <ion-list>
+      <ion-item>
+        <ion-select
+          interface="popover"
+          placeholder="Page Size"
+          [value]="pageSize"
+          (ionChange)="pageSizeChanged($event)"
+        >
+          <ion-select-option *ngFor="let page of pageSizes" [value]="page">{{
+            page
+          }}</ion-select-option>
+        </ion-select>
+      </ion-item>
+    </ion-list>
+  </div>
+
+  <ion-buttons slot="primary">
+    <ion-button color="dark" (click)="firstPageClicked()"
+      >&#60;&#60;</ion-button
+    >
+    <ion-button
+      color="dark"
+      [disabled]="previousPage == null"
+      (click)="previousPageClicked()"
+      >&#60;</ion-button
+    >
+    <ion-button
+      [disabled]="previousPage == null"
+      color="dark"
+      (click)="previousPageClicked()"
+      >{{ previousPage != null ? previousPage : "-" }}</ion-button
+    >
+    <ion-button color="dark" fill="solid">{{ currentPage }}</ion-button>
+    <ion-button
+      [disabled]="nextPage == null"
+      color="dark"
+      (click)="nextPageClicked()"
+      >{{ nextPage != null ? nextPage : "-" }}</ion-button
+    >
+    <ion-button
+      color="dark"
+      [disabled]="nextPage == null"
+      (click)="nextPageClicked()"
+      >&#62;</ion-button
+    >
+    <ion-button color="dark" (click)="lastPageClicked()">&#62;&#62;</ion-button>
+  </ion-buttons>
+</ion-toolbar>

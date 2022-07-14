@@ -1,20 +1,69 @@
-<ion-header [translucent]="true">
+<ion-header collapse="fade" [translucent]="true">
   <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
+    <ion-buttons slot="secondary">
+      <ion-button color="dark" (click)="isFilterModalOpen = true"
+        >Filter</ion-button
+      >
+    </ion-buttons>
+    <ion-title> Employee Management </ion-title>
+    <ion-buttons slot="primary">
+      <ion-button fill="solid" color="primary" [routerLink]="['/details']"
+        >New</ion-button
+      >
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
+      <ion-title size="large">Employee Management</ion-title>
     </ion-toolbar>
   </ion-header>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+  <ion-progress-bar *ngIf="isLoading" type="indeterminate"></ion-progress-bar>
+
+  <div
+    *ngIf="isFiltered"
+    style="display: flex; align-items: center; justify-content: space-between"
+  >
+    <span *ngIf="filterables.name.length > 0"
+      >Name like {{filterables.name}}</span
+    >
+    <span *ngIf="filterables.department.length > 0"
+      >Department: {{filterables.department}}</span
+    >
+    <span *ngIf="filterables.position.length > 0"
+      >Position: {{filterables.position}}</span
+    >
+    <ion-button (click)="clearFilter()">Clear Filter</ion-button>
   </div>
+
+  <ion-refresher slot="fixed" (ionRefresh)="refreshEmployees($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-list>
+    <app-employee-list-item
+      *ngFor="let employee of employees; let i = index"
+      [employee]="employee"
+      index="{{i | paginationIndex: paginator}}"
+      (onDelete)="onDeleteEmployee($event)"
+    >
+    </app-employee-list-item>
+  </ion-list>
 </ion-content>
+
+<ion-footer>
+  <app-paginator
+    #paginator
+    [totalCount]="totalEmployeesCount"
+    (onChanged)="refreshEmployees()"
+  ></app-paginator>
+</ion-footer>
+
+<app-filter-modal
+  trigger="open-modal"
+  [isOpen]="isFilterModalOpen"
+  (onClose)="onFilterModelClose($event)"
+></app-filter-modal>

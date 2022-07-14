@@ -1,0 +1,55 @@
+<ion-modal [isOpen]="isOpen">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-button (click)="cancel()">Cancel</ion-button>
+        </ion-buttons>
+        <ion-title>Filter Employee</ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="confirm()" [strong]="true">Confirm</ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding">
+      <ion-item>
+        <ion-label position="stacked">Name</ion-label>
+        <ion-input
+          [(ngModel)]="newFilterables.name"
+          type="text"
+          placeholder="John Doe"
+        ></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Department</ion-label>
+        <ion-select
+          interface="popover"
+          [value]="newFilterables.department"
+          (ionChange)="onDepartmentSelect($event)"
+          placeholder="HR Department"
+        >
+          <ion-select-option
+            *ngFor="let department of departments"
+            [value]="department"
+            >{{ department }}</ion-select-option
+          >
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Position</ion-label>
+        <ion-select
+          interface="popover"
+          [value]="newFilterables.position"
+          (ionChange)="onPositionSelect($event)"
+          placeholder="HR Officer"
+        >
+          <ion-select-option
+            *ngFor="let position of positions"
+            [value]="position"
+            >{{ position }}</ion-select-option
+          >
+        </ion-select>
+      </ion-item>
+    </ion-content>
+  </ng-template>
+</ion-modal>

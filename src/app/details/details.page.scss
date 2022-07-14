@@ -1,0 +1,18 @@
+.autocomplete-input {
+  outline: none !important;
+  border: none;
+  width: 100%;
+  padding-left: 0;
+  box-shadow: 0 0 0 transparent;
+}
+
+.autocomplete-input:focus {
+  outline: none !important;
+  border: none;
+  box-shadow: 0 0 0 transparent;
+}
+
+.suffix-icon {
+  position: absolute;
+  right: 0;
+}
